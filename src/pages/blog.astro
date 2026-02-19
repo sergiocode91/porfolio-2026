@@ -17,7 +17,6 @@ const levels = ['All', ...new Set(posts.map(p => p.data.category))];
         </p>
     </div>
 
-    <!-- Filter Tabs -->
     <div class="flex flex-wrap gap-2 mb-12" id="filter-tabs">
         {levels.map((category) => (
             <button 
@@ -30,7 +29,6 @@ const levels = ['All', ...new Set(posts.map(p => p.data.category))];
         ))}
     </div>
 
-    <!-- Blog Posts List -->
     <div class="flex flex-col gap-12" id="posts-grid">
         {posts.map((post) => (
           <article data-category={post.data.category} class="post-card group relative transition-all duration-500">
@@ -55,8 +53,6 @@ const levels = ['All', ...new Set(posts.map(p => p.data.category))];
           </article>
         ))}
     </div>
-
-    <div class="border-t border-white/10 my-10"></div>
   </div>
 </Layout>
 
@@ -69,11 +65,9 @@ const levels = ['All', ...new Set(posts.map(p => p.data.category))];
             tab.addEventListener('click', () => {
                 const category = tab.getAttribute('data-category');
 
-                // Update tab states
                 tabs.forEach(t => t.setAttribute('data-active', 'false'));
                 tab.setAttribute('data-active', 'true');
 
-                // Filter posts
                 posts.forEach(post => {
                     const postCard = post as HTMLElement;
                     const projectCategory = postCard.getAttribute('data-category');

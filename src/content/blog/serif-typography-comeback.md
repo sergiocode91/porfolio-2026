@@ -3,7 +3,7 @@ title: "The shift towards Serif typography"
 description: "How serif fonts are making a comeback in premium brand identities."
 date: "Feb 05, 2026"
 category: "Design"
-heroImage: "https://images.unsplash.com/photo-1512236359040-26180b396e06?auto=format&fit=crop&q=80&w=1200&h=600"
+heroImage: "/img/blog/serif-typography.png"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

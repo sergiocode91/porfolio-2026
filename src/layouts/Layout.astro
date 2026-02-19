@@ -4,7 +4,6 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-// Onest - Import all weights
 import '@fontsource/onest/100.css';
 import '@fontsource/onest/200.css';
 import '@fontsource/onest/300.css';
@@ -14,7 +13,6 @@ import '@fontsource/onest/600.css';
 import '@fontsource/onest/700.css';
 import '@fontsource/onest/800.css';
 import '@fontsource/onest/900.css';
-// Playfair Display - Import all weights (Normal and Italic)
 import '@fontsource/playfair-display/400.css';
 import '@fontsource/playfair-display/400-italic.css';
 import '@fontsource/playfair-display/500.css';
@@ -47,7 +45,6 @@ const { title } = Astro.props;
 		<ClientRouter />
 	</head>
 	<body class="bg-black text-white font-sans antialiased min-h-screen flex flex-col relative overflow-x-hidden">
-    <!-- Background Glow -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[500px] bg-blue-600/24 blur-[120px] rounded-full -z-10 pointer-events-none opacity-50"></div>
     <Header />
     <main class="w-full max-w-[720px] mx-auto px-4">

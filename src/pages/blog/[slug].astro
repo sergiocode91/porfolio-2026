@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { ArrowLeft, Share2, Calendar, Clock } from '@lucide/astro';
 
+import type { CollectionEntry } from 'astro:content';
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
@@ -11,16 +13,34 @@ export async function getStaticPaths() {
   }));
 }
 
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-// Mock reading time
-const readingTime = "5 min read";
+const wordsPerMinute = 200;
+const numberOfWords = post.body.split(/\s/g).length;
+const minutes = Math.ceil(numberOfWords / wordsPerMinute);
+const readingTime = `${minutes} min read`;
+
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+  .filter(p => p.slug !== post.slug)
+  .filter(p => p.data.category === post.data.category)
+  .slice(0, 2);
+
+if (relatedPosts.length < 2) {
+    const otherPosts = allPosts
+        .filter(p => p.slug !== post.slug && !relatedPosts.find(rp => rp.slug === p.slug))
+        .slice(0, 2 - relatedPosts.length);
+    relatedPosts.push(...otherPosts);
+}
 ---
 
 <Layout title={`${post.data.title} | Blog`}>
   <article class="pt-12 md:pt-20">
-    <!-- Back Button & Share -->
     <div class="flex items-center justify-between mb-10">
       <a 
         href="/blog" 
@@ -38,9 +58,8 @@ const readingTime = "5 min read";
       </button>
     </div>
 
-    <!-- Hero Image -->
     {post.data.heroImage && (
-      <div class="relative aspect-[21/9] w-full overflow-hidden rounded-2xl bg-neutral-900 border border-white/5 mb-16">
+      <div class="relative aspect-video w-full overflow-hidden rounded-2xl bg-neutral-900 border border-white/5 mb-16">
         <img 
           src={post.data.heroImage} 
           alt={post.data.title}
@@ -49,7 +68,6 @@ const readingTime = "5 min read";
       </div>
     )}
 
-    <!-- Header -->
     <header class="space-y-6 mb-16">
       <h1 class="text-3xl md:text-5xl font-serif italic text-white leading-tight">
         {post.data.title}
@@ -67,12 +85,43 @@ const readingTime = "5 min read";
       </div>
     </header>
 
-    <!-- Content -->
-    <div class="prose prose-invert prose-neutral max-w-none">
+    <div class="prose prose-invert prose-neutral max-w-none mb-24">
         <div class="space-y-8 text-neutral-300 font-sans text-base md:text-lg leading-relaxed">
             <Content />
         </div>
     </div>
+
+    {relatedPosts.length > 0 && (
+      <section class="border-t border-white/10 pt-16 mb-20">
+        <h3 class="text-xs uppercase tracking-[0.2em] font-sans text-neutral-500 mb-10">
+          Continue Reading
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {relatedPosts.map((relatedPost) => (
+            <a 
+              href={`/blog/${relatedPost.slug}`}
+              class="group block space-y-4"
+            >
+              <div class="relative aspect-video overflow-hidden rounded-xl bg-neutral-900 border border-white/5">
+                <img 
+                  src={relatedPost.data.heroImage} 
+                  alt={relatedPost.data.title}
+                  class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="space-y-2">
+                <h4 class="text-xl font-serif italic text-white group-hover:text-neutral-300 transition-colors">
+                  {relatedPost.data.title}
+                </h4>
+                <p class="text-sm text-neutral-500 font-sans">
+                  {relatedPost.data.date} · {relatedPost.data.category}
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
   </article>
 </Layout>
 
@@ -88,7 +137,6 @@ const readingTime = "5 min read";
                         url: window.location.href
                     });
                 } catch (err) {
-                    // Fallback to copy to clipboard
                     try {
                         await navigator.clipboard.writeText(window.location.href);
                         const originalText = shareButton.innerHTML;
@@ -106,7 +154,6 @@ const readingTime = "5 min read";
 </script>
 
 <style is:global>
-    /* Custom prose-like classes */
     .prose h2 {
         font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
         font-style: italic;
@@ -119,7 +166,7 @@ const readingTime = "5 min read";
         margin-bottom: 1.5rem;
     }
     .prose blockquote {
-        background: rgb(23 23 23); /* neutral-900 */
+        background: rgb(23 23 23);
         border: 1px solid rgba(255, 255, 255, 0.05);
         padding: 2rem;
         border-radius: 1rem;
@@ -131,7 +178,7 @@ const readingTime = "5 min read";
     .prose ul {
         list-style-type: disc;
         padding-left: 1.25rem;
-        color: rgb(163 163 163); /* neutral-400 */
+        color: rgb(163 163 163);
         margin-bottom: 1.5rem;
         display: flex;
         flex-direction: column;

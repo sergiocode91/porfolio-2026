@@ -3,7 +3,7 @@ title: "Building scalable Astro applications"
 description: "Lessons learned from architecting high-performance web applications using Astro 5."
 date: "Feb 10, 2026"
 category: "Technology"
-heroImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200&h=600"
+heroImage: "/img/blog/scalable-astro.png"
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

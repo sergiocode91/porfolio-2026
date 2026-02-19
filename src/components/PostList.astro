@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import { ArrowRight } from '@lucide/astro';
 
 const posts = await getCollection('blog');
-// Get only the most recent 3 posts
 const recentPosts = posts
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 3);
