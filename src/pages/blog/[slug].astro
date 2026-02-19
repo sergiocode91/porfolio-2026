@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { ArrowLeft, Share2, Calendar, Clock } from '@lucide/astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+// Mock reading time
+const readingTime = "5 min read";
+---
+
+<Layout title={`${post.data.title} | Blog`}>
+  <article class="pt-12 md:pt-20">
+    <!-- Back Button & Share -->
+    <div class="flex items-center justify-between mb-10">
+      <a 
+        href="/blog" 
+        class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-sans text-white hover:text-white transition-colors group"
+      >
+        <ArrowLeft class="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+        BACK TO BLOG
+      </a>
+      
+      <button 
+        id="share-button"
+        class="inline-flex items-center gap-2 text-sm font-sans text-neutral-500 hover:text-white transition-colors cursor-pointer group"
+      >
+        <Share2 class="w-5 h-5 group-hover:scale-110 transition-transform" />
+      </button>
+    </div>
+
+    <!-- Hero Image -->
+    {post.data.heroImage && (
+      <div class="relative aspect-[21/9] w-full overflow-hidden rounded-2xl bg-neutral-900 border border-white/5 mb-16">
+        <img 
+          src={post.data.heroImage} 
+          alt={post.data.title}
+          class="object-cover w-full h-full"
+        />
+      </div>
+    )}
+
+    <!-- Header -->
+    <header class="space-y-6 mb-16">
+      <h1 class="text-3xl md:text-5xl font-serif italic text-white leading-tight">
+        {post.data.title}
+      </h1>
+
+      <div class="flex flex-wrap items-center gap-6 text-neutral-500 font-sans text-sm">
+        <div class="flex items-center gap-2">
+          <Calendar class="w-4 h-4" />
+          {post.data.date}
+        </div>
+        <div class="flex items-center gap-2">
+          <Clock class="w-4 h-4" />
+          {readingTime}
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="prose prose-invert prose-neutral max-w-none">
+        <div class="space-y-8 text-neutral-300 font-sans text-base md:text-lg leading-relaxed">
+            <Content />
+        </div>
+    </div>
+  </article>
+</Layout>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const shareButton = document.getElementById('share-button');
+        
+        if (shareButton) {
+            shareButton.addEventListener('click', async () => {
+                try {
+                    await navigator.share({
+                        title: document.title,
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    // Fallback to copy to clipboard
+                    try {
+                        await navigator.clipboard.writeText(window.location.href);
+                        const originalText = shareButton.innerHTML;
+                        shareButton.innerHTML = 'Copied!';
+                        setTimeout(() => {
+                            shareButton.innerHTML = originalText;
+                        }, 2000);
+                    } catch (copyErr) {
+                        console.error('Failed to share:', err);
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+<style is:global>
+    /* Custom prose-like classes */
+    .prose h2 {
+        font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        font-style: italic;
+        color: white;
+        font-size: 1.5rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+    }
+    .prose p {
+        margin-bottom: 1.5rem;
+    }
+    .prose blockquote {
+        background: rgb(23 23 23); /* neutral-900 */
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 2rem;
+        border-radius: 1rem;
+        font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 3rem 0;
+    }
+    .prose ul {
+        list-style-type: disc;
+        padding-left: 1.25rem;
+        color: rgb(163 163 163); /* neutral-400 */
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+</style>

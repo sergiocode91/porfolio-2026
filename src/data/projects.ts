@@ -6,6 +6,7 @@ export interface Project {
   link: string;
   image: string;
   category: string;
+  slug: string;
 }
 
 export const projects: Project[] = [
@@ -17,6 +18,7 @@ export const projects: Project[] = [
     link: "#",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450",
     category: "Development",
+    slug: "nexus-platform",
   },
   {
     name: "Aura Design System",
@@ -26,6 +28,7 @@ export const projects: Project[] = [
     link: "#",
     image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=800&h=450",
     category: "Design",
+    slug: "aura-design-system",
   },
   {
     name: "Pulse Analytics",
@@ -35,5 +38,6 @@ export const projects: Project[] = [
     link: "#",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450",
     category: "Development",
+    slug: "pulse-analytics",
   },
 ];

@@ -1,6 +1,12 @@
 ---
-import { posts } from '../data/posts';
+import { getCollection } from 'astro:content';
 import { ArrowRight } from '@lucide/astro';
+
+const posts = await getCollection('blog');
+// Get only the most recent 3 posts
+const recentPosts = posts
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 3);
 ---
 
 <section class="py-8">
@@ -12,18 +18,18 @@ import { ArrowRight } from '@lucide/astro';
   </div>
 
   <div class="flex flex-col gap-10">
-    {posts.map((post) => (
+    {recentPosts.map((post) => (
       <a href={`/blog/${post.slug}`} class="group flex flex-col gap-2">
         <div class="flex items-center justify-between">
           <h3 class="text-xl md:text-2xl font-serif italic text-white group-hover:text-neutral-300 transition-colors leading-tight">
-            {post.title}
+            {post.data.title}
           </h3>
           <span class="text-xs md:text-sm font-sans text-neutral-500 whitespace-nowrap ml-4">
-            {post.date}
+            {post.data.date}
           </span>
         </div>
         <p class="text-sm md:text-base font-sans text-neutral-400 max-w-[600px] leading-relaxed line-clamp-2">
-          {post.description}
+          {post.data.description}
         </p>
       </a>
     ))}
