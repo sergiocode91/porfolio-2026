@@ -4,11 +4,13 @@ import { Moon, Search, Mail, Hand, BriefcaseBusiness, Rss, FingerprintPattern, M
 <header class="w-full max-w-[720px] mx-auto py-4">
   <nav class="grid grid-cols-3 items-center text-white px-4">
     <div class="flex justify-start">
-      <a href="/" class="text-xl font-bold hover:text-blue-400 transition-colors">Sergio</a>
+      <a href="/" class="group transition-transform active:scale-95" aria-label="Home">
+        <img src="/logo_dark.svg" alt="Sergio Logo" class="w-8 h-8 opacity-90 group-hover:opacity-100 transition-opacity" />
+      </a>
     </div>
 
     <div class="flex justify-center">
-      <div class="flex items-center gap-4 bg-white/10 backdrop-blur-md px-4 py-1 rounded-full border border-white/10">
+      <div class="flex items-center gap-4 bg-white/5 px-4 py-1 rounded-full border border-white/10">
         <a href="/" class="relative p-2 transition-colors group" aria-label="Home">
           <Hand class="w-4.5 h-4.5 transition-colors" stroke-width={1.5} />
           {Astro.url.pathname === '/' && <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3.5px] h-[3.5px] bg-lime-400 rounded-full"></div>}

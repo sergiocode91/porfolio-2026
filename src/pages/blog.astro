@@ -1,12 +1,90 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { posts } from '../data/posts';
+
+const levels = ['All', ...new Set(posts.map(p => p.category))];
 ---
 
-<Layout title="Blog | Porfolio 2026">
-  <h1 class="text-4xl font-bold mb-4 flex items-center gap-2">
-    Blog
-  </h1>
-  <div class="mt-8">
-    <p>My thoughts and writings.</p>
+<Layout title="Blog | Sergio">
+  <div class="pt-12 md:pt-20">
+    <div class="space-y-4 mb-12">
+        <h1 class="text-3xl md:text-5xl font-serif italic text-white leading-tight">
+          Blog
+        </h1>
+        <p class="text-neutral-400 font-sans max-w-[500px]">
+          Thoughts on design, technology, and the intersection of both.
+        </p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex flex-wrap gap-2 mb-12" id="filter-tabs">
+        {levels.map((category) => (
+            <button 
+                data-category={category}
+                data-active={category === 'All' ? "true" : "false"}
+                class="px-4 py-1.5 rounded-full border text-xs uppercase tracking-widest font-semibold transition-all cursor-pointer bg-transparent text-neutral-500 border-white/10 data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:border-white data-[active=false]:hover:border-white/20 data-[active=false]:hover:text-neutral-300"
+            >
+                {category}
+            </button>
+        ))}
+    </div>
+
+    <!-- Blog Posts List -->
+    <div class="flex flex-col gap-12" id="posts-grid">
+        {posts.map((post) => (
+          <article data-category={post.category} class="post-card group relative transition-all duration-500">
+            <a href={`/blog/${post.slug}`} class="flex flex-col gap-3">
+              <div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2">
+                <h2 class="text-2xl md:text-3xl font-serif italic text-white group-hover:text-neutral-300 transition-colors leading-tight">
+                  {post.title}
+                </h2>
+                <time class="text-sm font-sans text-neutral-500 whitespace-nowrap">
+                  {post.date}
+                </time>
+              </div>
+              <p class="text-sm md:text-base font-sans text-neutral-400 leading-relaxed max-w-[640px]">
+                {post.description}
+              </p>
+              
+              <div class="flex items-center gap-2 text-xs uppercase tracking-widest font-medium text-white/50 group-hover:text-white transition-colors mt-2">
+                Read article 
+                <span class="block w-4 h-[1px] bg-white/20 group-hover:w-8 group-hover:bg-white transition-all duration-300"></span>
+              </div>
+            </a>
+          </article>
+        ))}
+    </div>
   </div>
 </Layout>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const tabs = document.querySelectorAll('#filter-tabs button');
+        const posts = document.querySelectorAll('.post-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.getAttribute('data-category');
+
+                // Update tab states
+                tabs.forEach(t => t.setAttribute('data-active', 'false'));
+                tab.setAttribute('data-active', 'true');
+
+                // Filter posts
+                posts.forEach(post => {
+                    const postCard = post as HTMLElement;
+                    const projectCategory = postCard.getAttribute('data-category');
+                    
+                    if (category === 'All' || projectCategory === category) {
+                        postCard.style.display = 'block';
+                    } else {
+                        postCard.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<style>
+</style>

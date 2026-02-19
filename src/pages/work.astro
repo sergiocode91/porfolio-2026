@@ -1,12 +1,102 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { projects } from '../data/projects';
+
+const levels = ['All', ...new Set(projects.map(p => p.category))];
 ---
 
-<Layout title="Work | Porfolio 2026">
-  <h1 class="text-4xl font-bold mb-4 flex items-center gap-2">
-    Work
-  </h1>
-  <div class="mt-8">
-    <p>My recent work will be displayed here.</p>
+<Layout title="Work | Sergio">
+  <div class="pt-12 md:pt-20">
+    <div class="space-y-4 mb-12">
+        <h1 class="text-3xl md:text-5xl font-serif italic text-white leading-tight">
+          Works
+        </h1>
+        <p class="text-neutral-400 font-sans max-w-[500px]">
+          A collection of projects where I've blended design precision with technical engineering.
+        </p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="flex flex-wrap gap-2 mb-12" id="filter-tabs">
+        {levels.map((category) => (
+            <button 
+                data-category={category}
+                data-active={category === 'All' ? "true" : "false"}
+                class="px-4 py-1.5 rounded-full border text-xs uppercase tracking-widest font-semibold transition-all cursor-pointer bg-transparent text-neutral-500 border-white/10 data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:border-white data-[active=false]:hover:border-white/20 data-[active=false]:hover:text-neutral-300"
+            >
+                {category}
+            </button>
+        ))}
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 gap-12" id="projects-grid">
+        {projects.map((project) => (
+          <div data-category={project.category} class="project-card group transition-all duration-500">
+            <a href={project.link} class="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-center">
+              <div class="relative aspect-video overflow-hidden rounded-xl bg-neutral-900 border border-white/5">
+                <img 
+                  src={project.image} 
+                  alt={project.name}
+                  class="object-cover w-full h-full grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                />
+              </div>
+              
+              <div class="flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-2xl font-serif italic text-white group-hover:text-neutral-300 transition-colors leading-tight">
+                    {project.name}
+                  </h3>
+                  <span class="text-sm font-sans text-neutral-500">
+                    {project.year}
+                  </span>
+                </div>
+                <p class="text-sm md:text-base font-sans text-neutral-400 leading-relaxed">
+                  {project.description}
+                </p>
+                <div class="flex flex-wrap gap-2 mt-2">
+                  {project.tech.map((t) => (
+                    <span class="text-[10px] uppercase tracking-widest font-sans font-medium text-neutral-500 px-2.5 py-1 rounded-full bg-neutral-900">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+    </div>
   </div>
 </Layout>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const tabs = document.querySelectorAll('#filter-tabs button');
+        const projects = document.querySelectorAll('.project-card');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.getAttribute('data-category');
+
+                // Update tab states
+                tabs.forEach(t => t.setAttribute('data-active', 'false'));
+                tab.setAttribute('data-active', 'true');
+
+                // Filter projects
+                projects.forEach(project => {
+                    const projectCard = project as HTMLElement;
+                    const projectCategory = projectCard.getAttribute('data-category');
+                    
+                    if (category === 'All' || projectCategory === category) {
+                        projectCard.style.display = 'block';
+                    } else {
+                        projectCard.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<style>
+</style>

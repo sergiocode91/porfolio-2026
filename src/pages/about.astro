@@ -1,12 +1,80 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+
+const skills = [
+  {
+    category: "Frontend",
+    items: ["Angular", "React.js", "Next.js", "Vue.js", "TailwindCSS", "RxJS", "Signal", "JavaScript (ES6+)", "TypeScript", "Micro Frontends", "Clean Architecture"]
+  },
+  {
+    category: "Backend & Databases",
+    items: ["NestJS", "Node.js", "PostgreSQL", "MongoDB", "Supabase", "Firebase", "REST APIs"]
+  },
+  {
+    category: "App Mobile",
+    items: ["Ionic", "React Native", "Expo", "Flutter"]
+  },
+  {
+    category: "Testing & QA",
+    items: ["Cypress", "Playwright", "Jest", "Jasmine", "Testing Library", "E2E & Unit Testing"]
+  },
+  {
+    category: "DevOps & CI/CD",
+    items: ["Git", "GitHub Actions", "GitLab CI", "Docker", "AWS", "Automated Deployments"]
+  },
+  {
+    category: "Tools & Analytics",
+    items: ["Figma", "Datadog", "Google Analytics", "Visualization & Monitoring"]
+  },
+  {
+    category: "Methodologies",
+    items: ["Scrum", "Kanban", "Agile", "Code Reviews", "Continuous Integration"]
+  },
+  {
+    category: "Languages",
+    items: ["Spanish (Native)", "English (Intermediate)"]
+  }
+];
 ---
 
-<Layout title="About | Porfolio 2026">
-  <h1 class="text-4xl font-bold mb-4 flex items-center gap-2">
-    About
-  </h1>
-  <div class="mt-8">
-    <p>Get in touch with me.</p>
+<Layout title="About | Sergio">
+  <div class="pt-12 md:pt-20">
+    <!-- Intro Section -->
+    <div class="space-y-6 mb-16">
+        <h1 class="text-3xl md:text-5xl font-serif italic text-white leading-tight">
+          A bit about me
+        </h1>
+        <div class="space-y-4 text-neutral-400 font-sans leading-relaxed max-w-[600px]">
+            <p>
+                For over 10 years, I have been building high-performance web solutions for industry leaders in retail and consulting. As a specialist in JavaScript, I focus on leading technical initiatives and optimizing operational processes to drive efficiency in complex, multidisciplinary environments.
+            </p>
+            <p>
+                I bridge the gap between technical excellence and strategic leadership, helping teams transform complex challenges into scalable digital realities.
+            </p>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div class="space-y-12">
+        <h2 class="text-sm uppercase tracking-[0.2em] font-medium text-white/50 border-b border-white/5 pb-4">
+            Skills & Expertise
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+            {skills.map((skillGroup) => (
+                <div class="space-y-6">
+                    <h3 class="text-xl font-serif italic text-white">{skillGroup.category}</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {skillGroup.items.map((skill) => (
+                            <span class="text-[10px] uppercase tracking-widest font-sans font-medium text-neutral-500 px-3 py-1.5 rounded-full bg-neutral-900 border border-white/5">
+                                {skill}
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
   </div>
 </Layout>
