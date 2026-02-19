@@ -22,7 +22,7 @@ const levels = ['All', ...new Set(posts.map(p => p.data.category))];
             <button 
                 data-category={category}
                 data-active={category === 'All' ? "true" : "false"}
-                class="px-4 py-1.5 rounded-full border text-xs uppercase tracking-widest font-semibold transition-all cursor-pointer bg-transparent text-neutral-500 border-white/10 data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:border-white data-[active=false]:hover:border-white/20 data-[active=false]:hover:text-neutral-300"
+                class="px-4 py-1.5 rounded-full border text-[10px] uppercase tracking-widest font-semibold transition-all cursor-pointer bg-transparent text-neutral-500 border-white/10 data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:border-white data-[active=false]:hover:border-white/20 data-[active=false]:hover:text-neutral-300"
             >
                 {category}
             </button>
