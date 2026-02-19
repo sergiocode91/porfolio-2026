@@ -1,0 +1,40 @@
+---
+import { Moon, Search, Mail, Hand, BriefcaseBusiness, Rss, FingerprintPattern, MessageCircleMore } from '@lucide/astro';
+---
+<header class="w-full max-w-[720px] mx-auto py-4">
+  <nav class="grid grid-cols-3 items-center text-white px-4">
+    <div class="flex justify-start">
+      <a href="/" class="text-xl font-bold hover:text-blue-400 transition-colors">Portfolio</a>
+    </div>
+
+    <div class="flex justify-center">
+      <div class="flex items-center gap-4 bg-white/10 backdrop-blur-md px-4 py-1 rounded-full border border-white/10">
+        <a href="/" class="relative p-2 transition-colors group" aria-label="Home">
+          <Hand class="w-4.5 h-4.5 transition-colors" stroke-width={1.5} />
+          {Astro.url.pathname === '/' && <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3.5px] h-[3.5px] bg-lime-400 rounded-full"></div>}
+        </a>
+        <a href="/work" class="relative p-2 transition-colors group" aria-label="Work">
+          <BriefcaseBusiness class="w-4.5 h-4.5 transition-colors" stroke-width={1.5} />
+          {Astro.url.pathname.startsWith('/work') && <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3.5px] h-[3.5px] bg-lime-400 rounded-full"></div>}
+        </a>
+        <a href="/blog" class="relative p-2 transition-colors group" aria-label="Blog">
+          <MessageCircleMore class="w-4.5 h-4.5 transition-colors" stroke-width={1.5} />
+          {Astro.url.pathname.startsWith('/blog') && <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3.5px] h-[3.5px] bg-lime-400 rounded-full"></div>}
+        </a>
+        <a href="/about" class="relative p-2 transition-colors group" aria-label="Contact">
+          <FingerprintPattern class="w-4.5 h-4.5 transition-colors" stroke-width={1.5} />
+          {Astro.url.pathname.startsWith('/about') && <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3.5px] h-[3.5px] bg-lime-400 rounded-full"></div>}
+        </a>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4 justify-end">
+      <button class="hover:text-blue-400 transition-colors" aria-label="Toggle Dark Mode">
+        <Moon class="w-5 h-5" stroke-width={1.5} />
+      </button>
+      <button class="hover:text-blue-400 transition-colors" aria-label="Search">
+        <Search class="w-5 h-5" stroke-width={1.5} />
+      </button>
+    </div>
+  </nav>
+</header>
