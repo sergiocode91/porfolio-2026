@@ -27,7 +27,7 @@ export const projects: Project[] = [
     tech: ["TypeScript", "CSS", "Storybook"],
     link: "#",
     image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=800&h=450",
-    category: "Design",
+    category: "Architecture",
     slug: "aura-design-system",
   },
   {
@@ -37,7 +37,17 @@ export const projects: Project[] = [
     tech: ["Next.js", "D3.js", "Trpc"],
     link: "#",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450",
-    category: "Development",
+    category: "Mobile App",
+    slug: "pulse-analytics",
+  },
+  {
+    name: "Pulse Analytics",
+    description: "High-performance data visualization engine for financial market analysis.",
+    year: "2024",
+    tech: ["Next.js", "D3.js", "Trpc"],
+    link: "#",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800&h=450",
+    category: "Landing",
     slug: "pulse-analytics",
   },
 ];

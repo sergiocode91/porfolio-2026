@@ -59,7 +59,7 @@ if (relatedPosts.length < 2) {
     </div>
 
     {post.data.heroImage && (
-      <div class="relative aspect-video w-full overflow-hidden rounded-2xl bg-neutral-900 border border-white/5 mb-16">
+      <div class="relative aspect-video w-full overflow-hidden rounded-2xl bg-neutral-900 mb-16">
         <img 
           src={post.data.heroImage} 
           alt={post.data.title}
@@ -102,7 +102,7 @@ if (relatedPosts.length < 2) {
               href={`/blog/${relatedPost.slug}`}
               class="group block space-y-4"
             >
-              <div class="relative aspect-video overflow-hidden rounded-xl bg-neutral-900 border border-white/5">
+              <div class="relative aspect-video overflow-hidden rounded-xl bg-neutral-900">
                 <img 
                   src={relatedPost.data.heroImage} 
                   alt={relatedPost.data.title}
